@@ -1,6 +1,5 @@
-import express from "express";
-import helmet from "helmet";
-import apiRoute from "./api/routes";
+const express = require("express");
+const helmet = require("helmet");
 
 const PORT = parseInt(process.env["PORT"] ?? "5000");
 const app = express();
@@ -10,6 +9,9 @@ app.use(helmet());
 
 
 // Add API routes
-app.use(apiRoute);
-
+app.get("/", (req, res) => {
+    res.json({
+        message: 'Hello'
+    });
+});
 app.listen(PORT, () => console.log(`Server running on port ${PORT}...`));
