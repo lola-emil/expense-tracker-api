@@ -1,7 +1,7 @@
 import Joi from "joi";
 import { User } from "../dal/user";
 import * as userDal from "../dal/user";
-import { comparePassword } from "./encryptPassword";
+import { comparePassword } from "./password-util";
 
 
 const loginSchema = Joi.object({

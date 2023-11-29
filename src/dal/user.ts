@@ -1,6 +1,6 @@
 import { db } from "../db";
 import { v4 as uuidv4 } from "uuid";
-import { encryptPassword } from "../util/encryptPassword";
+import { encryptPassword } from "../util/password-util";
 
 const TBL_NAME = "tbl_users";
 
