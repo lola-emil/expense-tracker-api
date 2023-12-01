@@ -20,3 +20,20 @@ export async function insert(expense: Expense) {
         throw new Error((<any>error).code);
     }
 }
+
+export async function findAllByUserId(userId: string) {
+    try {
+        const result = await db<Expense>(TBL_NAME).select().where("user_id", userId);
+        return result;
+    } catch (error) {
+        throw new Error((<any>error).code);
+    }
+}
+
+export async function updateById(id: string, data: Expense) {
+    try {
+        await db<Expense>(TBL_NAME).update(data).where("expense_id", id);
+    } catch (error) {
+        throw new Error((<any>error).code);
+    }
+}

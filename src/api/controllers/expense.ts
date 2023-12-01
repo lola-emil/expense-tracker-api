@@ -16,7 +16,31 @@ export async function addExpense(req: Request, res: Response) {
 
     apiResponse.status = 200;
     apiResponse.data = { expense_id: result };
-    apiResponse.message = "Ok";
 
     return handleResponse(apiResponse, res);
+}
+
+export async function getExpenses(req: Request, res: Response) {
+    const apiResponse = new ApiResponse();
+    const userId = String(req.query.userId);
+
+    if (!userId) throw new ErrorResponse(404, "'userId' query required");
+
+    const expenses = await expenseDal.findAllByUserId(userId);
+
+    apiResponse.status = 200;
+    apiResponse.data = expenses;
+
+    return handleResponse(apiResponse, res);
+}
+
+export async function updateExpense(req: Request, res: Response) {
+    const apiResponse = new ApiResponse();
+    const userId = req.params.userId;
+    const body = req.body;
+
+    await expenseDal.updateById(userId, body);
+
+    apiResponse.status = 200;
+    apiResponse.message = "Update successful";
 }

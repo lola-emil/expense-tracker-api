@@ -21,7 +21,7 @@ export class ApiResponse {
     message?: string;
     data: any;
 
-    constructor(status = 200, message?: string, data?: any) {
+    constructor(status = 200, message = "OK", data?: any) {
         this.status = status;
         this.message = message;
         this.data = data;

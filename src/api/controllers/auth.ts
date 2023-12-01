@@ -21,6 +21,7 @@ export async function login(req: Request, res: Response) {
         user_id: matchedUser?.user_id,
         token
     };
+
     return handleResponse(apiResponse, res);
 }
 
@@ -35,5 +36,6 @@ export async function register(req: Request, res: Response) {
 
     apiResponse.status = 201;
     apiResponse.message = "Registration successful";
+    
     return handleResponse(apiResponse, res);
 }
