@@ -1,4 +1,4 @@
-import { db } from "../db";
+import { db } from "./db";
 import { v4 as uuidv4 } from "uuid";
 import { encryptPassword } from "../util/password-util";
 
@@ -19,8 +19,7 @@ export async function insert(user: User) {
         await db<User>(TBL_NAME).insert(user);
         return userId;
     } catch (error) {
-        console.error(error);
-        return null;
+        throw new Error((<any>error).code);
     }
 }
 
@@ -29,8 +28,7 @@ export async function findbyUsername(username: string) {
         const result = await db<User>(TBL_NAME).select().where("username", username);
         return result[0];
     } catch (error) {
-        console.error(error);
-        return null;
+        throw new Error((<any>error).code);
     }
 }
 
@@ -39,7 +37,6 @@ export async function findById(id: string) {
         const result = await db<User>(TBL_NAME).select().where("user_id", id);
         return result[0];
     } catch (error) {
-        console.error(error);
-        return null;
+        throw new Error((<any>error).code);
     }
 }
