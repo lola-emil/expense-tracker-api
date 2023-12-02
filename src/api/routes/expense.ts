@@ -5,8 +5,8 @@ import authGuard from "../../middlewares/authGuard";
 
 const router = Router();
 
-router.get("/", authGuard, asyncHander(ExpenseController.getExpenses));
-router.post("/", authGuard, asyncHander(ExpenseController.addExpense));
-router.patch("/:userId", authGuard, asyncHander(ExpenseController.updateExpense));
+router.get("/", asyncHander(ExpenseController.getExpenses));
+router.post("/", asyncHander(ExpenseController.addExpense));
+router.patch("/:userId", asyncHander(ExpenseController.updateExpense));
 
 export default router;
