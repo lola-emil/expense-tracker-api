@@ -8,7 +8,6 @@ export default function asyncHander(handler: AsyncHandler) {
         try {
             await handler(req, res);
         } catch (error) {
-            console.log(error);
             next(error);
         }
     };

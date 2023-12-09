@@ -3,11 +3,14 @@ import { ErrorResponse } from "../util/response-util";
 import { verifyToken } from "../util/jwt-util";
 
 export default async function authGuard(req: Request, res: Response, next: NextFunction) {
-    const token = req.header("Authorization");
-
-    if (!token) return next(new ErrorResponse(401, "Unauthorized: No token provided"));
-
     try {
+        const token = req.header("Authorization");
+
+        if (!token)
+            return next(new ErrorResponse(401, "Unauthorized: No token provided"));
+        if (token.split(" ")[0] !== "Bearer")
+            return next(new ErrorResponse(401, "Unauthorized: Invalid token"));
+
         await verifyToken(token.split(" ")[1], "secret");
         return next();
     } catch (error) {

@@ -44,3 +44,27 @@ export async function updateExpense(req: Request, res: Response) {
     apiResponse.status = 200;
     apiResponse.message = "Update successful";
 }
+
+
+export async function getOverview(req: Request, res: Response) {
+    const apiResponse = new ApiResponse();
+    const data = await expenseDal.getOverview();
+
+    console.log(data);
+    apiResponse.data = data;
+    apiResponse.status = 200;
+
+    return handleResponse(apiResponse, res);
+}
+
+export async function getRecent(req: Request, res: Response) {
+    const apiResponse = new ApiResponse();
+    const data = await expenseDal.getRecentRecords();
+
+    console.log(data);
+
+    apiResponse.data = data;
+    apiResponse.status = 200;
+    
+    return handleResponse(apiResponse, res);
+}

@@ -2,7 +2,7 @@ import Joi from "joi";
 import { User } from "../dal/user";
 import * as userDal from "../dal/user";
 import { comparePassword } from "./password-util";
-import { Expense } from "../dal/expense";
+import { Record } from "../dal/expense";
 
 
 const loginSchema = Joi.object({
@@ -17,9 +17,10 @@ const registerSchema = Joi.object({
     password: Joi.string().alphanum().min(8).required()
 });
 
-const expenseSchema = Joi.object({
-    description: Joi.string().max(50).required(),
+const recordSchema = Joi.object({
+    note: Joi.string().max(50).required(),
     category: Joi.string().max(50).required(),
+    type: Joi.string().required(),
     amount: Joi.number().required(),
     user_id: Joi.string().required()
 });
@@ -48,8 +49,8 @@ export async function validateRegister(user: User): Promise<string | null> {
     return null;
 }
 
-export function validateExpense(expense: Expense) {
-    const { error } = expenseSchema.validate(expense);
+export function validateExpense(expense: Record) {
+    const { error } = recordSchema.validate(expense);
 
     if (error) return error.message;
 
