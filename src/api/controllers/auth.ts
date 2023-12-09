@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import * as userDal from "../../dal/user";
-import { validateLogin, validateRegister } from "../../util/validation-util";
-import { signToken } from "../../util/jwt-util";
-import { ApiResponse, ErrorResponse, handleResponse } from "../../util/response-util";
+import { validateLogin, validateRegister } from "../../utils/validation-util";
+import { signToken } from "../../utils/jwt-util";
+import { ApiResponse, ErrorResponse, handleResponse } from "../../utils/response-util";
 
 export async function login(req: Request, res: Response) {
     const apiResponse = new ApiResponse();

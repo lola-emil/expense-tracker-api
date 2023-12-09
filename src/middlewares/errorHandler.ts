@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { ApiResponse, ErrorResponse, handleResponse } from "../util/response-util";
+import { ApiResponse, ErrorResponse, handleResponse } from "../utils/response-util";
 
 export default function errorHandler(error: Error, req: Request, res: Response, _next: NextFunction) {
     const apiResponse = new ApiResponse();

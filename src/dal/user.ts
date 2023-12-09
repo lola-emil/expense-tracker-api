@@ -1,6 +1,6 @@
 import { db } from "./db";
 import { v4 as uuidv4 } from "uuid";
-import { encryptPassword } from "../util/password-util";
+import { encryptPassword } from "../utils/password-util";
 
 const TBL_NAME = "tbl_users";
 
@@ -13,8 +13,8 @@ export interface User {
 }
 
 export async function insert(user: User) {
-    const userId = uuidv4();
     try {
+        const userId = uuidv4();
         user.password = await encryptPassword(user.password);
         await db<User>(TBL_NAME).insert(user);
         return userId;

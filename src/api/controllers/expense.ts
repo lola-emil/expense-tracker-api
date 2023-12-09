@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import * as expenseDal from "../../dal/expense";
-import { validateExpense } from "../../util/validation-util";
-import { ApiResponse, ErrorResponse, handleResponse } from "../../util/response-util";
+import { validateExpense } from "../../utils/validation-util";
+import { ApiResponse, ErrorResponse, handleResponse } from "../../utils/response-util";
 
 
 export async function addExpense(req: Request, res: Response) {

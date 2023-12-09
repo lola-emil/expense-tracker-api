@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import { ErrorResponse } from "../util/response-util";
-import { verifyToken } from "../util/jwt-util";
+import { ErrorResponse } from "../utils/response-util";
+import { verifyToken } from "../utils/jwt-util";
 
 export default async function authGuard(req: Request, res: Response, next: NextFunction) {
     try {
