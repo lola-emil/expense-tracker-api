@@ -43,14 +43,19 @@ export async function updateExpense(req: Request, res: Response) {
 
     apiResponse.status = 200;
     apiResponse.message = "Update successful";
+
+    return handleResponse(apiResponse, res);
 }
 
 
 export async function getOverview(req: Request, res: Response) {
-    const apiResponse = new ApiResponse();
-    const data = await expenseDal.getOverview();
+    const userId = String(req.query.userId);
 
-    console.log(data);
+    if (!userId) throw new ErrorResponse(404, "'userId' query required");
+
+    const apiResponse = new ApiResponse();
+    const data = await expenseDal.getOverview(userId);
+
     apiResponse.data = data;
     apiResponse.status = 200;
 
@@ -58,13 +63,18 @@ export async function getOverview(req: Request, res: Response) {
 }
 
 export async function getRecent(req: Request, res: Response) {
+    const userId = String(req.query.userId);
+
+    if (!userId) throw new ErrorResponse(404, "'userId' query required");
+
     const apiResponse = new ApiResponse();
-    const data = await expenseDal.getRecentRecords();
+    const data = await expenseDal.getRecentRecords(userId);
+
 
     console.log(data);
 
     apiResponse.data = data;
     apiResponse.status = 200;
-    
+
     return handleResponse(apiResponse, res);
 }

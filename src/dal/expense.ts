@@ -39,12 +39,13 @@ export async function updateById(id: string, data: Record) {
     }
 }
 
-export async function getOverview() {
+export async function getOverview(userId: string) {
     try {
         let rows = await db<Record>(TBL_NAME)
             .column("category")
             .sum({ total_sales: "amount" })
-            .groupBy("category");
+            .groupBy("category")
+            .where("user_id", userId);
 
         let totalSum = rows.reduce((sum, row) =>
             sum + row.total_sales, 0);
@@ -61,12 +62,13 @@ export async function getOverview() {
     }
 }
 
-export async function getRecentRecords() {
+export async function getRecentRecords(userId: string) {
     try {
         let rows = await db<Record>(TBL_NAME)
             .column("record_id", "note", "category", "amount", "type", "created_at")
             .select()
-            .orderBy("created_at", "desc");
+            .where("user_id", userId)
+            .orderBy("created_at", "desc").limit(5);
 
         return rows;
     } catch (error) {

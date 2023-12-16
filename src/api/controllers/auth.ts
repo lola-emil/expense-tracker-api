@@ -13,12 +13,13 @@ export async function login(req: Request, res: Response) {
     if (error) throw new ErrorResponse(400, error);
 
     const matchedUser = await userDal.findbyUsername(user.username);
-    const token = await signToken({ user_id: matchedUser?.user_id }, "secret");
+    const token = await signToken({ user_id: matchedUser?.user_id }, "secret-key");
 
     apiResponse.status = 200;
     apiResponse.message = "Login successful";
     apiResponse.data = {
         user_id: matchedUser?.user_id,
+        name: matchedUser?.firstname + " " + matchedUser?.lastname,
         token
     };
 

@@ -1,8 +1,9 @@
 import Joi from "joi";
 import { User } from "../dal/user";
 import * as userDal from "../dal/user";
-import { comparePassword } from "./password-util";
 import { Record } from "../dal/expense";
+
+import bcrypt from "bcrypt";
 
 
 const loginSchema = Joi.object({
@@ -32,7 +33,8 @@ export async function validateLogin(user: User): Promise<string | null> {
 
     const matchedUser = await userDal.findbyUsername(user.username);
     if (!matchedUser) return "Invalid username or password";
-    if (!(await comparePassword(user.password, matchedUser.password)))
+    
+    if (!(await bcrypt.compare(user.password, matchedUser.password)))
         return "Invalid username or password";
 
     return null;
