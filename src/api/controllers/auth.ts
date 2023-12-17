@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import * as userDal from "../../dal/user";
+import * as userRepo from "../../dal/user";
 import { validateLogin, validateRegister } from "../../utils/validation-util";
 import { signToken } from "../../utils/jwt-util";
 import { ApiResponse, ErrorResponse, handleResponse } from "../../utils/response-util";
@@ -12,7 +12,7 @@ export async function login(req: Request, res: Response) {
 
     if (error) throw new ErrorResponse(400, error);
 
-    const matchedUser = await userDal.findbyUsername(user.username);
+    const matchedUser = await userRepo.findbyUsername(user.username);
     const token = await signToken({ user_id: matchedUser?.user_id }, "secret-key");
 
     apiResponse.status = 200;
@@ -33,7 +33,7 @@ export async function register(req: Request, res: Response) {
 
     if (error) throw new ErrorResponse(400, error);
 
-    await userDal.insert(user);
+    await userRepo.insert(user);
 
     apiResponse.status = 201;
     apiResponse.message = "Registration successful";
