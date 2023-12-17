@@ -8,7 +8,6 @@ export interface Record {
     category: string;
     amount: number;
     user_id: string;
-    type: "income" | "expense";
     created_at: Date;
 }
 
@@ -65,7 +64,7 @@ export async function getOverview(userId: string) {
 export async function getRecentRecords(userId: string) {
     try {
         let rows = await db<Record>(TBL_NAME)
-            .column("record_id", "note", "category", "amount", "type", "created_at")
+            .column("record_id", "note", "category", "amount", "created_at")
             .select()
             .where("user_id", userId)
             .orderBy("created_at", "desc").limit(5);

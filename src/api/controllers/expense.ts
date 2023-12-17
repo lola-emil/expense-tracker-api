@@ -12,7 +12,7 @@ export async function addExpense(req: Request, res: Response) {
     if (error) throw new ErrorResponse(400, error);
 
     const result = await expenseDal.insert(body);
-    if (result == null) throw new ErrorResponse(500, "dili ma add");
+    if (result == null) throw new ErrorResponse(500, "Insertion error");
 
     apiResponse.status = 200;
     apiResponse.data = { expense_id: result };
