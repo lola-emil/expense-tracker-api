@@ -23,9 +23,16 @@ export async function insert(expense: Record) {
 }
 
 // Get all records/transactions by user_id
-export async function findAllByUserId(userId: string) {
+export async function findAllByUserId(userId: string, month?: number, year?: number) {
     try {
-        const result = await db<Record>(TBL_NAME).select().where("user_id", userId);
+        const result = await db<Record>(TBL_NAME)
+            .select()
+            .whereRaw("DATE_FORMAT(created_at, '%Y-%m') = ? AND user_id = ?",
+                [
+                    `${year}-${month?.toString().padStart(2, "0")}`,
+                    userId
+                ]);
+
         return result;
     } catch (error) {
         throw new Error((<any>error).code);
@@ -69,7 +76,6 @@ export async function getOverview(userId: string) {
 export async function getRecentRecords(userId: string) {
     try {
         let rows = await db<Record>(TBL_NAME)
-            .column("record_id", "note", "category", "amount", "created_at")
             .select()
             .where("user_id", userId)
             .orderBy("created_at", "desc").limit(5);

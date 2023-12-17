@@ -1,6 +1,7 @@
 import express from "express";
 import helmet from "helmet";
 import apiRoute from "./api/routes";
+import adminRoute from "./admin/routes";
 import errorHandler from "./middlewares/errorHandler";
 import cors from "cors";
 
@@ -13,6 +14,9 @@ app.use(cors());
 
 // Add API routes
 app.use(apiRoute);
+
+// Add admin routes
+app.use("/admin", adminRoute);
 
 // Add error handler
 app.use(errorHandler);
