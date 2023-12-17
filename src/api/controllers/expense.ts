@@ -83,3 +83,4 @@ export async function getRecent(req: Request, res: Response) {
 
     return handleResponse(apiResponse, res);
 }
+

@@ -26,17 +26,3 @@ export async function login(req: Request, res: Response) {
     return handleResponse(apiResponse, res);
 }
 
-export async function register(req: Request, res: Response) {
-    const apiResponse = new ApiResponse();
-    const user = req.body;
-    const error = await validateRegister(user);
-
-    if (error) throw new ErrorResponse(400, error);
-
-    await userRepo.insert(user);
-
-    apiResponse.status = 201;
-    apiResponse.message = "Registration successful";
-    
-    return handleResponse(apiResponse, res);
-}

@@ -53,17 +53,17 @@ export async function getOverview(userId: string) {
     try {
         let rows = await db<Record>(TBL_NAME)
             .column("category")
-            .sum({ total_sales: "amount" })
+            .sum({ total_expense: "amount" })
             .groupBy("category")
             .where("user_id", userId);
 
         let totalSum = rows.reduce((sum, row) =>
-            sum + row.total_sales, 0);
+            sum + row.total_expense, 0);
 
         let result = rows.map(row => ({
             category: row.category,
-            total_sales: row.total_sales,
-            percentage: parseFloat(((row.total_sales / totalSum) * 100).toFixed(2))
+            total_sales: row.total_expense,
+            percentage: parseFloat(((row.total_expense / totalSum) * 100).toFixed(2))
         }));
 
         return result;
@@ -81,6 +81,19 @@ export async function getRecentRecords(userId: string) {
             .orderBy("created_at", "desc").limit(5);
 
         return rows;
+    } catch (error) {
+        throw new Error((<any>error).code);
+    }
+}
+
+export async function getTotalExpenseById(userId: string) {
+    try {
+        const result = await db<Record>(TBL_NAME)
+        .column("amount")
+        .sum({total_expense: "amount"})
+        .where("user_id", userId);
+
+        return result;
     } catch (error) {
         throw new Error((<any>error).code);
     }
