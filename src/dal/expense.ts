@@ -11,6 +11,7 @@ export interface Record {
     created_at: Date;
 }
 
+// Insert new record/transaction to database
 export async function insert(expense: Record) {
     const expenseId = uuidv4();
     try {
@@ -21,6 +22,7 @@ export async function insert(expense: Record) {
     }
 }
 
+// Get all records/transactions by user_id
 export async function findAllByUserId(userId: string) {
     try {
         const result = await db<Record>(TBL_NAME).select().where("user_id", userId);
@@ -30,6 +32,7 @@ export async function findAllByUserId(userId: string) {
     }
 }
 
+// Update record/transaction by id
 export async function updateById(id: string, data: Record) {
     try {
         await db<Record>(TBL_NAME).update(data).where("record_id", id);
@@ -38,6 +41,7 @@ export async function updateById(id: string, data: Record) {
     }
 }
 
+// Get overview of records/transactions
 export async function getOverview(userId: string) {
     try {
         let rows = await db<Record>(TBL_NAME)
@@ -61,6 +65,7 @@ export async function getOverview(userId: string) {
     }
 }
 
+// Get the 5 latest added records/transactions from database
 export async function getRecentRecords(userId: string) {
     try {
         let rows = await db<Record>(TBL_NAME)

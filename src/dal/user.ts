@@ -12,6 +12,7 @@ export interface User {
     password: string;
 }
 
+// Query for new user registration
 export async function insert(user: User) {
     try {
         const userId = uuidv4();
@@ -23,6 +24,7 @@ export async function insert(user: User) {
     }
 }
 
+// Query for finding user by username
 export async function findbyUsername(username: string) {
     try {
         const result = await db<User>(TBL_NAME).select().where("username", username);
@@ -32,6 +34,7 @@ export async function findbyUsername(username: string) {
     }
 }
 
+// Query for finding user by user_id
 export async function findById(id: string) {
     try {
         const result = await db<User>(TBL_NAME).select().where("user_id", id);
