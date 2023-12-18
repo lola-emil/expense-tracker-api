@@ -31,7 +31,8 @@ export async function findAllByUserId(userId: string, month?: number, year?: num
                 [
                     `${year}-${month?.toString().padStart(2, "0")}`,
                     userId
-                ]);
+                ])
+            .orderBy("created_at", "desc");
 
         return result;
     } catch (error) {
@@ -89,10 +90,33 @@ export async function getRecentRecords(userId: string) {
 export async function getTotalExpenseById(userId: string) {
     try {
         const result = await db<Record>(TBL_NAME)
-        .column("amount")
-        .sum({total_expense: "amount"})
-        .where("user_id", userId);
+            .column("amount")
+            .sum({ total_expense: "amount" })
+            .where("user_id", userId);
 
+        return result;
+    } catch (error) {
+        throw new Error((<any>error).code);
+    }
+}
+
+export async function searchByDescriptionOrCategory(userId: string, query: string) {
+    try {
+        const result = await db<Record>(TBL_NAME)
+            .select()
+            .where("user_id", userId)
+            .whereILike("note", `%${query}%`)
+            .orWhereILike("category", `%${query}%`);
+
+        return result;
+    } catch (error) {
+        throw new Error((<any>error).code);
+    }
+}
+
+export async function deleteById(id: string) {
+    try {
+        const result = await db<Record>(TBL_NAME).delete().where("record_id", id);
         return result;
     } catch (error) {
         throw new Error((<any>error).code);

@@ -1,11 +1,11 @@
 import { Router } from "express";
-import asyncHander from "../../middlewares/asyncHandler";
+import asyncHandler from "../../middlewares/asyncHandler";
 import * as userController from "../controllers/user";
 import authGuard from "../../middlewares/authGuard";
 
 const router = Router();
 
-router.get("/", authGuard, asyncHander(userController.getUsers));
-router.post("/register", authGuard, asyncHander(userController.register));
-router.get("/search",authGuard, asyncHander(userController.searchUsers) )
+router.get("/", authGuard, asyncHandler(userController.getUsers));
+router.post("/register", authGuard, asyncHandler(userController.register));
+router.get("/search",authGuard, asyncHandler(userController.searchUsers) )
 export default router;
