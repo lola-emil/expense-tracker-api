@@ -7,5 +7,5 @@ const router = Router();
 
 router.get("/", authGuard, asyncHander(userController.getUsers));
 router.post("/register", authGuard, asyncHander(userController.register));
-
+router.get("/search",authGuard, asyncHander(userController.searchUsers) )
 export default router;

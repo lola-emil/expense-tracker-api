@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 
 export function signToken(payload: string | object | Buffer, secretKey: jwt.Secret) {
     return new Promise((resolve, reject) => {
-        jwt.sign(payload, secretKey, { expiresIn: "1h" }, (err, token) => {
+        jwt.sign(payload, secretKey, (err, token) => {
             if (err) reject(err);
             resolve(token);
         });

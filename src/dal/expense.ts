@@ -62,7 +62,7 @@ export async function getOverview(userId: string) {
 
         let result = rows.map(row => ({
             category: row.category,
-            total_sales: row.total_expense,
+            total_expense: row.total_expense,
             percentage: parseFloat(((row.total_expense / totalSum) * 100).toFixed(2))
         }));
 

@@ -26,6 +26,22 @@ export async function register(req: Request, res: Response) {
 
     apiResponse.status = 201;
     apiResponse.message = "Registration successful";
-    
+
+    return handleResponse(apiResponse, res);
+}
+
+
+export async function searchUsers(req: Request, res: Response) {
+    const apiResponse = new ApiResponse();
+
+    const q = req.query.q;
+
+    console.log(q);
+
+    const result = await userRepo.searchUserByName(String(q));
+
+    apiResponse.status = 200;
+    apiResponse.data = result;
+
     return handleResponse(apiResponse, res);
 }

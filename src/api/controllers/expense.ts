@@ -24,14 +24,17 @@ export async function getExpenses(req: Request, res: Response) {
     const apiResponse = new ApiResponse();
     const userId = String(req.query.userId);
 
+
     const currentDate = new Date();
 
-    const month = req.query.month ?? currentDate.getMonth() + 1;
-    const year = req.query.year ?? currentDate.getFullYear();
+    const month = currentDate.getMonth() + 1;
+    const year = currentDate.getFullYear();
 
     if (!userId) throw new ErrorResponse(404, "'userId' query required");
 
-    const expenses = await expenseDal.findAllByUserId(userId);
+    const expenses = await expenseDal.findAllByUserId(userId, month, year);
+
+    console.log(expenses);
 
     apiResponse.status = 200;
     apiResponse.data = expenses;
