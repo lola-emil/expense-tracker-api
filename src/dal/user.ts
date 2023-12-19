@@ -77,3 +77,16 @@ export async function searchUserByName(query: string) {
         throw new Error((<any>error).code);
     }
 }
+
+export async function updatePasswordById(userId: string, password: string) {
+    try {
+        password = await bcrypt.hash(password, 10);
+        const result = await db<User>(TBL_NAME)
+        .update("password", password)
+        .where("user_id", userId);
+
+        return result;
+    } catch (error) {
+        throw new Error((<any>error).code);
+    }
+}

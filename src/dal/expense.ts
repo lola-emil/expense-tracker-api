@@ -105,8 +105,10 @@ export async function searchByDescriptionOrCategory(userId: string, query: strin
         const result = await db<Record>(TBL_NAME)
             .select()
             .where("user_id", userId)
-            .whereILike("note", `%${query}%`)
-            .orWhereILike("category", `%${query}%`);
+            .andWhere(function () {
+                this.whereILike("note", `%${query}%`)
+                    .orWhereILike("category", `%${query}%`);
+            });
 
         return result;
     } catch (error) {

@@ -3,6 +3,7 @@ import * as userRepo from "../../dal/user";
 import { validateLogin, validateRegister } from "../../utils/validation-util";
 import { signToken } from "../../utils/jwt-util";
 import { ApiResponse, ErrorResponse, handleResponse } from "../../utils/response-util";
+import { compare } from "bcrypt";
 
 export async function login(req: Request, res: Response) {
     const apiResponse = new ApiResponse();
@@ -26,3 +27,32 @@ export async function login(req: Request, res: Response) {
     return handleResponse(apiResponse, res);
 }
 
+export async function updatePassword(req: Request, res: Response) {
+    const apiResponse = new ApiResponse();
+
+    const userId = req.query.userId;
+
+    if (!userId) throw new ErrorResponse(404, "'userId' query required");
+
+    let { currentPassword, newPassword } = req.body;
+    const matchedUser = await userRepo.findById(userId.toString());
+    
+    console.log(currentPassword, newPassword);
+
+    if (!currentPassword || !newPassword)
+        throw new ErrorResponse(400, "Please fill all the required fields");
+
+    const currentPasswordMatches = await compare(currentPassword, matchedUser.password);
+    console.log(currentPasswordMatches);
+    if (!matchedUser)
+        throw new ErrorResponse(400, "An Error Occurred");
+    if (!currentPasswordMatches)
+        throw new ErrorResponse(400, "Current password doesn't match");
+
+    await userRepo.updatePasswordById(userId.toString(), newPassword);
+
+    apiResponse.status = 200;
+    apiResponse.message = "Password updated successfully";
+
+    return handleResponse(apiResponse, res);
+}
