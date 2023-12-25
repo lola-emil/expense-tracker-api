@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import * as userRepo from "../../dal/user";
+import * as userRepo from "../model/user";
 import { validateLogin, validateRegister } from "../../utils/validation-util";
 import { signToken } from "../../utils/jwt-util";
 import { ApiResponse, ErrorResponse, handleResponse } from "../../utils/response-util";

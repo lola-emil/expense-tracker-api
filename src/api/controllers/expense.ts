@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import * as expenseRepo from "../../dal/expense";
+import * as expenseRepo from "../model/expense";
 import { validateExpense } from "../../utils/validation-util";
 import { ApiResponse, ErrorResponse, handleResponse } from "../../utils/response-util";
 

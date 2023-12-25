@@ -1,11 +1,11 @@
 import Joi from "joi";
-import { User } from "../dal/user";
-import * as userRepo from "../dal/user";
-import * as adminRepo from "../dal/admin";
-import { Record } from "../dal/expense";
+import { User } from "../api/model/user";
+import * as userRepo from "../api/model/user";
+import * as adminRepo from "../api/model/admin";
+import { Record } from "../api/model/expense";
 
 import bcrypt from "bcrypt";
-import { Admin } from "../dal/admin";
+import { Admin } from "../api/model/admin";
 
 
 const loginSchema = Joi.object({
