@@ -6,7 +6,6 @@ export default async function authGuard(req: Request, res: Response, next: NextF
     try {
         const token = req.header("Authorization");
 
-        console.log(token);
         if (!token)
             return next(new ErrorResponse(401, "Unauthorized: No token provided"));
         if (token.split(" ")[0] !== "Bearer")

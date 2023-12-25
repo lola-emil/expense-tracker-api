@@ -34,8 +34,6 @@ export async function getExpenses(req: Request, res: Response) {
 
     const expenses = await expenseRepo.findAllByUserId(userId, month, year);
 
-    console.log(expenses);
-
     apiResponse.status = 200;
     apiResponse.data = expenses;
 
@@ -89,9 +87,6 @@ export async function getRecent(req: Request, res: Response) {
 
     const apiResponse = new ApiResponse();
     const data = await expenseRepo.getRecentRecords(userId);
-
-
-    console.log(data);
 
     apiResponse.data = data;
     apiResponse.status = 200;
