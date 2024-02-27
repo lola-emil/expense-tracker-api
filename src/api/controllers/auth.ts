@@ -37,13 +37,12 @@ export async function updatePassword(req: Request, res: Response) {
     let { currentPassword, newPassword } = req.body;
     const matchedUser = await userRepo.findById(userId.toString());
     
-    console.log(currentPassword, newPassword);
 
     if (!currentPassword || !newPassword)
         throw new ErrorResponse(400, "Please fill all the required fields");
 
     const currentPasswordMatches = await compare(currentPassword, matchedUser.password);
-    console.log(currentPasswordMatches);
+
     if (!matchedUser)
         throw new ErrorResponse(400, "An Error Occurred");
     if (!currentPasswordMatches)

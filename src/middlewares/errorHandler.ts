@@ -10,7 +10,6 @@ export default function errorHandler(error: Error, req: Request, res: Response, 
         apiResponse.status = errorResponse.status;
         apiResponse.message = errorResponse.message;
     } else {
-        console.log(error);
         apiResponse.status = 500;
         apiResponse.message = "Internal Server Error: " + error.message;
     }
