@@ -1,7 +1,6 @@
 import express from "express";
 import helmet from "helmet";
 import apiRoute from "./api/routes";
-import adminRoute from "./admin/routes";
 import errorHandler from "./middlewares/errorHandler";
 import cors from "cors";
 import { ErrorResponse } from "./utils/response-util";
@@ -16,9 +15,6 @@ app.use(helmet());
 
 // Add API routes
 app.use(apiRoute);
-
-// Add admin routes
-app.use("/admin", adminRoute);
 
 app.use("*", (req, res) => {
     throw new ErrorResponse(404, `Can't ${req.method} ${req.originalUrl}`);

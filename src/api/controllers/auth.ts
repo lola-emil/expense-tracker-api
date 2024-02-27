@@ -5,6 +5,21 @@ import { signToken } from "../../utils/jwt-util";
 import { ApiResponse, ErrorResponse, handleResponse } from "../../utils/response-util";
 import { compare } from "bcrypt";
 
+
+export async function register(req: Request, res: Response) {
+    const apiResponse = new ApiResponse();
+    const user = req.body;
+
+    const error = await validateRegister(user);
+
+    if (error) throw new ErrorResponse(400, error);
+
+    apiResponse.status = 200;
+    apiResponse.message = "Registration successful";
+
+    return handleResponse(apiResponse, res);
+}
+
 export async function login(req: Request, res: Response) {
     const apiResponse = new ApiResponse();
 
