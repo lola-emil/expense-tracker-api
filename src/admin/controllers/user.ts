@@ -45,3 +45,21 @@ export async function searchUsers(req: Request, res: Response) {
 
     return handleResponse(apiResponse, res);
 }
+
+export async function deleteUser(req: Request, res: Response) {
+    const userId = req.query.userId + "";
+    const apiResponse = new ApiResponse();
+
+    if (!userId) 
+        throw new ErrorResponse(404, "Can't delete " + req.url);
+
+    await userRepo.deleteUser(userId);
+
+    
+    apiResponse.status = 200;
+    apiResponse.data = {
+        message: "Deleted Successfully"
+    }       
+
+    return handleResponse(apiResponse, res);
+}

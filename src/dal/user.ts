@@ -90,3 +90,12 @@ export async function updatePasswordById(userId: string, password: string) {
         throw new Error((<any>error).code);
     }
 }
+
+export async function deleteUser(userId: string) {
+    try {
+        const result = await db<User>(TBL_NAME).delete().where("user_id", userId);
+        return result;
+    } catch (error) {
+        throw new Error((<any>error).code);
+    }
+}
