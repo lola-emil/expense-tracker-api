@@ -7,7 +7,7 @@ const router = Router();
 
 router.get("/transactions", asyncHandler(ExpenseController.getExpenses));
 router.post("/transactions", asyncHandler(ExpenseController.addExpense));
-router.patch("/transactions/:userId", asyncHandler(ExpenseController.updateExpense));
+// router.patch("/transactions/:userId", asyncHandler(ExpenseController.updateExpense));
 router.delete("/transactions/:recordId", asyncHandler(ExpenseController.deleteRecord));
 
 router.get("/overview", asyncHandler(ExpenseController.getOverview));

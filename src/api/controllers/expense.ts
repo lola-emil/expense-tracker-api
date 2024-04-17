@@ -22,9 +22,11 @@ export async function addExpense(req: Request, res: Response) {
 
 export async function getExpenses(req: Request, res: Response) {
     const apiResponse = new ApiResponse();
-    const userId = String(req.query.userId);
+    const userId = res.locals.userId; 
 
-    if (!userId) throw new ErrorResponse(404, "'userId' query required");
+    console.log(userId);
+
+    // if (!userId) throw new ErrorResponse(404, "'userId' query required");
 
     const expenses = await expenseRepo.findAllByUserId(userId);
 
@@ -34,18 +36,18 @@ export async function getExpenses(req: Request, res: Response) {
     return handleResponse(apiResponse, res);
 }
 
-export async function updateExpense(req: Request, res: Response) {
-    const apiResponse = new ApiResponse();
-    const userId = req.params.userId;
-    const body = req.body;
+// export async function updateExpense(req: Request, res: Response) {
+//     const apiResponse = new ApiResponse();
+//     const userId = req.params.userId;
+//     const body = req.body;
 
-    await expenseRepo.updateById(userId, body);
+//     await expenseRepo.updateById(userId, body);
 
-    apiResponse.status = 200;
-    apiResponse.message = "Update successful";
+//     apiResponse.status = 200;
+//     apiResponse.message = "Update successful";
 
-    return handleResponse(apiResponse, res);
-}
+//     return handleResponse(apiResponse, res);
+// }
 
 export async function deleteRecord(req: Request, res: Response) {
     const apiResponse = new ApiResponse();
@@ -61,7 +63,7 @@ export async function deleteRecord(req: Request, res: Response) {
 
 
 export async function getOverview(req: Request, res: Response) {
-    const userId = String(req.query.userId);
+    const userId = res.locals.userId;
 
     if (!userId) throw new ErrorResponse(404, "'userId' query required");
 
@@ -75,7 +77,7 @@ export async function getOverview(req: Request, res: Response) {
 }
 
 export async function getRecent(req: Request, res: Response) {
-    const userId = String(req.query.userId);
+    const userId = res.locals.userId;
 
     if (!userId) throw new ErrorResponse(404, "'userId' query required");
 

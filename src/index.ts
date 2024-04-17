@@ -24,6 +24,7 @@ app.use("/admin", adminRoute);
 app.use("*", (req, res) => {
     throw new ErrorResponse(404, `Can't ${req.method} ${req.originalUrl}`);
 });
+
 // Add error handler
 app.use(errorHandler);
 
