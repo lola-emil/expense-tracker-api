@@ -8,8 +8,7 @@ export async function login(req: Request, res: Response) {
     const body: UserRepo.User = req.body;
     const apiResponse = new ApiResponse();
 
-    console.log(body);
-    const error = loginValidator(body);
+    const error = await loginValidator(body);
 
     if (error)
         throw new ErrorResponse(401, error);
