@@ -4,6 +4,9 @@ import apiRouter from "./api/routes";
 import errorHandler from "./middlewares/errorHandler";
 import cors from "cors";
 import { ErrorResponse } from "./utils/response-util";
+import * as dotenv from "dotenv";
+
+dotenv.config();
 
 const PORT = parseInt(process.env["PORT"] ?? "5000");
 const app = express();
