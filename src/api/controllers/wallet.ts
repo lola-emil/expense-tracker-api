@@ -15,9 +15,7 @@ export async function createWallet(req: Request, res: Response) {
     if (error)
         throw new ErrorResponse(400, error);
 
-    const result = await WalletRepo.insert(body);
-
-    console.log("From create wallet:", result);
+    await WalletRepo.insert(body);
 
     apiResponse.status = 200;
     apiResponse.message = "Created successfully";
@@ -39,9 +37,8 @@ export async function deleteWallet(req: Request, res: Response) {
     const walletId = req.params.id;
     const apiResponse = new ApiResponse();
 
-    const result = await WalletRepo.deleteWallet(walletId);
+    await WalletRepo.deleteWallet(walletId);
 
-    console.log("From create wallet:", result);
 
     apiResponse.status = 200;
     apiResponse.message = "Deleted successfully";

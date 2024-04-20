@@ -13,6 +13,7 @@ export const transactionSchema = Joi.object({
     amount: Joi.number().required(),
     description: Joi.string().required(),
     trans_type: Joi.string().required(),
+    wallet_id: Joi.string().required(),
     category_id: Joi.string().required(),
 
     // event_date: Joi.string()

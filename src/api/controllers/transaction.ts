@@ -19,16 +19,14 @@ export async function createTransaction(req: Request, res: Response) {
     const body: TransactionRepo.Transaction = req.body;
 
     body.user_id = res.locals.userId;
-    
+
     const error = transactionValidator(body);
     const apiResponse = new ApiResponse();
 
     if (error)
         throw new ErrorResponse(400, error);
 
-    const result =await TransactionRepo.insert(body);
-
-    console.log("from createTransaction:", result);
+    await TransactionRepo.insert(body);
 
     apiResponse.status = 200;
     apiResponse.message = "Created successfully";
@@ -39,7 +37,7 @@ export async function createTransaction(req: Request, res: Response) {
 export async function deleteTransaction(req: Request, res: Response) {
     const transId = req.params.id;
     const apiResponse = new ApiResponse();
-    
+
     const result = await TransactionRepo.deleteTransaction(transId);
 
     console.log("From delete transaction:", result);

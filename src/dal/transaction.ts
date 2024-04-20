@@ -9,6 +9,7 @@ export interface Transaction {
     amount: number;
     description: string;
     trans_type: string;
+    wallet_id: string;
     category_id: string;
     
     event_date: string;
