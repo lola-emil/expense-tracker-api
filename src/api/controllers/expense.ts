@@ -1,17 +1,17 @@
 import { Request, Response } from "express";
-import * as expenseRepo from "../../dal/expense";
-import { validateExpense } from "../../utils/validation-util";
+import * as recordRepo from "../../dal/record";
+import { validateRecord } from "../../utils/validation-util";
 import { ApiResponse, ErrorResponse, handleResponse } from "../../utils/response-util";
 
 
-export async function addExpense(req: Request, res: Response) {
+export async function addRecord(req: Request, res: Response) {
     const body = req.body;
-    const error = validateExpense(body);
+    const error = validateRecord(body);
     const apiResponse = new ApiResponse();
 
     if (error) throw new ErrorResponse(400, error);
 
-    const result = await expenseRepo.insert(body);
+    const result = await recordRepo.insert(body);
     if (result == null) throw new ErrorResponse(500, "Insertion error");
 
     apiResponse.status = 200;
@@ -20,7 +20,7 @@ export async function addExpense(req: Request, res: Response) {
     return handleResponse(apiResponse, res);
 }
 
-export async function getExpenses(req: Request, res: Response) {
+export async function getRecords(req: Request, res: Response) {
     const apiResponse = new ApiResponse();
     const userId = res.locals.userId; 
 
@@ -28,7 +28,7 @@ export async function getExpenses(req: Request, res: Response) {
 
     // if (!userId) throw new ErrorResponse(404, "'userId' query required");
 
-    const expenses = await expenseRepo.findAllByUserId(userId);
+    const expenses = await recordRepo.selectAll(userId);
 
     apiResponse.status = 200;
     apiResponse.data = expenses;
@@ -53,7 +53,7 @@ export async function deleteRecord(req: Request, res: Response) {
     const apiResponse = new ApiResponse();
     const recordId = req.params.recordId;
 
-    await expenseRepo.deleteById(recordId);
+    await recordRepo.deleteById(recordId);
 
     apiResponse.status = 200;
     apiResponse.message = "Record Deleted";
@@ -68,7 +68,7 @@ export async function getOverview(req: Request, res: Response) {
     if (!userId) throw new ErrorResponse(404, "'userId' query required");
 
     const apiResponse = new ApiResponse();
-    const data = await expenseRepo.getOverview(userId);
+    const data = await recordRepo.getOverview(userId);
 
     apiResponse.data = data;
     apiResponse.status = 200;
@@ -82,7 +82,7 @@ export async function getRecent(req: Request, res: Response) {
     if (!userId) throw new ErrorResponse(404, "'userId' query required");
 
     const apiResponse = new ApiResponse();
-    const data = await expenseRepo.getRecentRecords(userId);
+    const data = await recordRepo.getRecentRecords(userId);
 
     apiResponse.data = data;
     apiResponse.status = 200;
@@ -95,7 +95,7 @@ export async function searchTransaction(req: Request, res: Response) {
     const userId = req.query.userId;
     const query = req.query.q;
 
-    const result = await expenseRepo.searchByDescriptionOrCategory(userId + "", query + "");
+    const result = await recordRepo.searchByDescriptionOrCategory(userId + "", query + "");
 
     apiResponse.status = 200;
     apiResponse.data = result;

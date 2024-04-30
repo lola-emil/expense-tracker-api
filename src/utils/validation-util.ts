@@ -2,7 +2,7 @@ import Joi from "joi";
 import { User } from "../dal/user";
 import * as userRepo from "../dal/user";
 import * as adminRepo from "../dal/admin";
-import { Record } from "../dal/expense";
+import { Record } from "../dal/record";
 
 import bcrypt from "bcrypt";
 import { Admin } from "../dal/admin";
@@ -54,7 +54,7 @@ export async function validateRegister(user: User): Promise<string | null> {
     return null;
 }
 
-export function validateExpense(expense: Record) {
+export function validateRecord(expense: Record) {
     const { error } = recordSchema.validate(expense);
 
     if (error) return error.message;

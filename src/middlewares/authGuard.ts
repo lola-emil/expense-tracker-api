@@ -13,8 +13,6 @@ export default async function authGuard(req: Request, res: Response, next: NextF
 
         const decoded = await verifyToken(token.split(" ")[1], "secret-key");
         
-        console.log((<any>decoded).user_id, "aso");
-
         res.locals.userId = (<any>decoded).user_id;
 
         return next();

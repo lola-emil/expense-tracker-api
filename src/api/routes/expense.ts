@@ -5,8 +5,8 @@ import { ApiResponse, handleResponse } from "../../utils/response-util";
 
 const router = Router();
 
-router.get("/transactions", asyncHandler(ExpenseController.getExpenses));
-router.post("/transactions", asyncHandler(ExpenseController.addExpense));
+router.get("/transactions", asyncHandler(ExpenseController.getRecords));
+router.post("/transactions", asyncHandler(ExpenseController.addRecord));
 // router.patch("/transactions/:userId", asyncHandler(ExpenseController.updateExpense));
 router.delete("/transactions/:recordId", asyncHandler(ExpenseController.deleteRecord));
 

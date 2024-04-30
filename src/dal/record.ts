@@ -23,10 +23,12 @@ export async function insert(expense: Record) {
 }
 
 // Get all records/transactions by user_id
-export async function findAllByUserId(userId: string) {
+export async function selectAll(userId: string) {
     try {
         const result = await db<Record>(TBL_NAME)
-            .select().where("user_id", userId);
+            .select()
+            .where("user_id", userId)
+            .orderBy('created_at', 'desc');
 
         return result;
     } catch (error) {
@@ -37,7 +39,10 @@ export async function findAllByUserId(userId: string) {
 // Update record/transaction by id
 export async function updateById(id: string, data: Record) {
     try {
-        await db<Record>(TBL_NAME).update(data).where("record_id", id);
+        await db<Record>(TBL_NAME)
+            .update(data)
+            .where("record_id", id)
+            .orderBy('created_at', 'desc');
     } catch (error) {
         throw new Error((<any>error).code);
     }
@@ -102,7 +107,7 @@ export async function searchByDescriptionOrCategory(userId: string, query: strin
             .andWhere(function () {
                 this.whereILike("note", `%${query}%`)
                     .orWhereILike("category", `%${query}%`);
-            });
+            }).orderBy('created_at', 'desc');
 
         return result;
     } catch (error) {
