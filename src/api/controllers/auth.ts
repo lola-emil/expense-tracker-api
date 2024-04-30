@@ -14,7 +14,7 @@ export async function login(req: Request, res: Response) {
     if (error) throw new ErrorResponse(400, error);
 
     const matchedUser = await userRepo.findbyUsername(user.username);
-    const token = await signToken({ user_id: matchedUser?.user_id }, "secret-key");
+    const token = await signToken({ user_id: matchedUser?.user_id }, process.env["SECRET_KEY"] ?? "secret-key");
 
     apiResponse.status = 200;
     apiResponse.message = "Login successful";

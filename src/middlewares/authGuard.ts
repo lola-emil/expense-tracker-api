@@ -11,7 +11,7 @@ export default async function authGuard(req: Request, res: Response, next: NextF
         if (token.split(" ")[0] !== "Bearer")
             return next(new ErrorResponse(401, "Unauthorized: Invalid token"));
 
-        const decoded = await verifyToken(token.split(" ")[1], "secret-key");
+        const decoded = await verifyToken(token.split(" ")[1], process.env["SECRET_KEY"] ?? "secret-key");
         
         res.locals.userId = (<any>decoded).user_id;
 
