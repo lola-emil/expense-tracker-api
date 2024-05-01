@@ -9,7 +9,7 @@ import { Admin } from "../dal/admin";
 
 
 const loginSchema = Joi.object({
-    username: Joi.string().required(),
+    email: Joi.string().required(),
     password: Joi.string().required()
 });
 
@@ -34,7 +34,7 @@ export async function validateLogin(user: User): Promise<string | null> {
 
     if (error) return error.message;
 
-    const matchedUser = await userRepo.findbyUsername(user.username);
+    const matchedUser = await userRepo.findByEmail(user.email);
     if (!matchedUser) return "Invalid username or password";
     
     if (!(await bcrypt.compare(user.password, matchedUser.password)))
@@ -48,8 +48,8 @@ export async function validateRegister(user: User): Promise<string | null> {
 
     if (error) return error.message;
 
-    const matchedUser = await userRepo.findbyUsername(user.username);
-    if (matchedUser) return "Username already taken";
+    const matchedUser = await userRepo.findByEmail(user.username);
+    if (matchedUser) return "Email already taken";
 
     return null;
 }

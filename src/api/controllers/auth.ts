@@ -9,11 +9,12 @@ export async function login(req: Request, res: Response) {
     const apiResponse = new ApiResponse();
 
     const user = req.body;
+    console.log(user.email);
     const error = await validateLogin(user);
 
     if (error) throw new ErrorResponse(400, error);
 
-    const matchedUser = await userRepo.findbyUsername(user.username);
+    const matchedUser = await userRepo.findByEmail(user.email);
     const token = await signToken({ user_id: matchedUser?.user_id }, process.env["SECRET_KEY"] ?? "secret-key");
 
     apiResponse.status = 200;

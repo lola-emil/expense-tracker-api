@@ -26,10 +26,12 @@ export async function insert(user: User) {
     }
 }
 
-// Query for finding user by username
-export async function findbyUsername(username: string) {
+// Query for finding user by email
+export async function findByEmail(email: string) {
     try {
-        const result = await db<User>(TBL_NAME).select().where("username", username);
+        const result = await db<User>(TBL_NAME).select().where("email", email);
+
+        console.log("result: ", result);
         return result[0];
     } catch (error) {
         throw new Error((<any>error).code);
