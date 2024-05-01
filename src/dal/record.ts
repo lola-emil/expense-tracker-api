@@ -9,6 +9,7 @@ export interface Record {
     amount: number;
     user_id: string;
     created_at: Date;
+    delete_time: Date;
 }
 
 // Insert new record/transaction to database
@@ -28,6 +29,7 @@ export async function selectAll(userId: string) {
         const result = await db<Record>(TBL_NAME)
             .select()
             .where("user_id", userId)
+            .andWhere('delete_time', null)
             .orderBy('created_at', 'desc');
 
         return result;
@@ -55,7 +57,8 @@ export async function getOverview(userId: string) {
             .column("category")
             .sum({ total_expense: "amount" })
             .groupBy("category")
-            .where("user_id", userId);
+            .where("user_id", userId)
+            .andWhere('delete_time', null);
 
         let totalSum = rows.reduce((sum, row) =>
             sum + row.total_expense, 0);
@@ -78,6 +81,7 @@ export async function getRecentRecords(userId: string) {
         let rows = await db<Record>(TBL_NAME)
             .select()
             .where("user_id", userId)
+            .andWhere('delete_time', null)
             .orderBy("created_at", "desc").limit(5);
 
         return rows;
@@ -91,7 +95,8 @@ export async function getTotalExpenseById(userId: string) {
         const result = await db<Record>(TBL_NAME)
             .column("amount")
             .sum({ total_expense: "amount" })
-            .where("user_id", userId);
+            .where("user_id", userId)
+            .andWhere('delete_time', null);
 
         return result;
     } catch (error) {
@@ -104,6 +109,7 @@ export async function searchByDescriptionOrCategory(userId: string, query: strin
         const result = await db<Record>(TBL_NAME)
             .select()
             .where("user_id", userId)
+            .andWhere('delete_time', null)
             .andWhere(function () {
                 this.whereILike("note", `%${query}%`)
                     .orWhereILike("category", `%${query}%`);
@@ -117,7 +123,7 @@ export async function searchByDescriptionOrCategory(userId: string, query: strin
 
 export async function deleteById(id: string) {
     try {
-        const result = await db<Record>(TBL_NAME).delete().where("record_id", id);
+        const result = await db<Record>(TBL_NAME).update({ delete_time: new Date() }).where("record_id", id);
         return result;
     } catch (error) {
         throw new Error((<any>error).code);
