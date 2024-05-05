@@ -24,8 +24,6 @@ export async function getRecords(req: Request, res: Response) {
     const apiResponse = new ApiResponse();
     const userId = res.locals.userId; 
 
-    console.log(userId);
-
     // if (!userId) throw new ErrorResponse(404, "'userId' query required");
 
     const expenses = await recordRepo.selectAll(userId);

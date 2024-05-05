@@ -31,7 +31,6 @@ export async function findByEmail(email: string) {
     try {
         const result = await db<User>(TBL_NAME).select().where("email", email);
 
-        console.log("result: ", result);
         return result[0];
     } catch (error) {
         throw new Error((<any>error).code);

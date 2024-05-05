@@ -10,7 +10,6 @@ export async function login(req: Request, res: Response) {
     const apiResponse = new ApiResponse();
 
     const user = req.body;
-    console.log(user.email);
     const error = await validateLogin(user);
 
     if (error) throw new ErrorResponse(400, error);
