@@ -6,7 +6,8 @@ import errorHandler from "./middlewares/errorHandler";
 import cors from "cors";
 import { ErrorResponse } from "./utils/response-util";
 
-const PORT = parseInt(process.env["PORT"] ?? "5000");
+import { PORT } from "./config/constants";
+
 const app = express();
 
 app.use(cors());

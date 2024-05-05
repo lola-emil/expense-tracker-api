@@ -4,6 +4,7 @@ import { validateLogin, validateRegister } from "../../utils/validation-util";
 import { signToken } from "../../utils/jwt-util";
 import { ApiResponse, ErrorResponse, handleResponse } from "../../utils/response-util";
 import { compare } from "bcrypt";
+import { SECRET_KEY } from "../../config/constants";
 
 export async function login(req: Request, res: Response) {
     const apiResponse = new ApiResponse();
@@ -15,7 +16,7 @@ export async function login(req: Request, res: Response) {
     if (error) throw new ErrorResponse(400, error);
 
     const matchedUser = await userRepo.findByEmail(user.email);
-    const token = await signToken({ user_id: matchedUser?.user_id }, process.env["SECRET_KEY"] ?? "secret-key");
+    const token = await signToken({ user_id: matchedUser?.user_id }, SECRET_KEY);
 
     apiResponse.status = 200;
     apiResponse.message = "Login successful";

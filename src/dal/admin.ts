@@ -1,4 +1,4 @@
-import { db } from "./db";
+import { db } from "../config/db";
 
 
 const TBL_NAME = "tbl_admin";
