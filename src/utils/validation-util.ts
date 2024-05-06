@@ -24,8 +24,8 @@ const registerSchema = Joi.object({
 });
 
 const recordSchema = Joi.object({
-    note: Joi.string().max(50).required(),
     category: Joi.string().max(50).required(),
+    note: Joi.string().max(50).required(),
     amount: Joi.number().required(),
     user_id: Joi.string().required()
 });
