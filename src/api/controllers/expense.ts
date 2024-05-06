@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
-import * as recordRepo from "../../dal/record";
-import { validateRecord } from "../../utils/validation-util";
+import * as recordRepo from "../../dal/expense";
+import { validateExpense } from "../../utils/validation-util";
 import { ApiResponse, ErrorResponse, handleResponse } from "../../utils/response-util";
 
 
 export async function addRecord(req: Request, res: Response) {
     const body = req.body;
-    const error = validateRecord(body);
+    const error = validateExpense(body);
     const apiResponse = new ApiResponse();
 
     if (error) throw new ErrorResponse(400, error);

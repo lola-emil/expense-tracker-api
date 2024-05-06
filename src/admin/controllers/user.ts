@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import * as userRepo from "../../dal/user";
-import * as expenseRepo from "../../dal/record";
+import * as expenseRepo from "../../dal/expense";
 import { ApiResponse, ErrorResponse, handleResponse } from "../../utils/response-util";
 import { validateRegister } from "../../utils/validation-util";
 

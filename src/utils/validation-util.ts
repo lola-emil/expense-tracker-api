@@ -2,10 +2,11 @@ import Joi from "joi";
 import { User } from "../dal/user";
 import * as userRepo from "../dal/user";
 import * as adminRepo from "../dal/admin";
-import { Record } from "../dal/record";
+import { Expense } from "../dal/expense";
 
 import bcrypt from "bcrypt";
 import { Admin } from "../dal/admin";
+import { Record } from "../dal/record";
 
 
 const loginSchema = Joi.object({
@@ -54,13 +55,22 @@ export async function validateRegister(user: User): Promise<string | null> {
     return null;
 }
 
-export function validateRecord(expense: Record) {
+export function validateExpense(expense: Expense) {
     const { error } = recordSchema.validate(expense);
 
     if (error) return error.message;
 
     return null;
 }
+
+export function validateRecord(record: Record) {
+    const {error}  = recordSchema.validate(record);
+
+    if (error) return error.message;
+
+    return null;
+}
+
 
 export async function validateAdminLogin(admin: Admin) {
     const { error } = loginSchema.validate(admin);
