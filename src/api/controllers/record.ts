@@ -8,9 +8,15 @@ export async function getRecords(req: Request, res: Response) {
     const apiResponse = new ApiResponse();
     const userId = res.locals.userId;
 
-    const records = await RecordRepo.select(userId, req.query);
+    const records = await RecordRepo.select(userId, {
+        ...req.query,
+    });
+    const overview = await RecordRepo.getOverview(userId);
 
-    apiResponse.data = records;
+    apiResponse.data = {
+        overview,
+        records
+    };
     apiResponse.status = 200;
 
     return handleResponse(apiResponse, res);
