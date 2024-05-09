@@ -35,3 +35,7 @@ export async function getRecord(req: Request, res: Response) {
 
     return handleResponse(apiResponse, res);
 }
+
+export async function addRecord(req: Request, res: Response) {
+    
+}

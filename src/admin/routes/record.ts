@@ -6,8 +6,8 @@ const router = Router();
 
 router.get("/", asyncHandler(RecordController.getRecords));
 router.get("/:id", asyncHandler(RecordController.getRecord));
-// router.post("");
-// router.patch("");
-// router.delete("");
+router.post("/");
+router.patch("/:id");
+router.delete("/:id");
 
 export default router;
