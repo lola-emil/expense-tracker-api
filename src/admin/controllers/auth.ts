@@ -3,6 +3,7 @@ import { ApiResponse, ErrorResponse, handleResponse } from "../../utils/response
 import { validateAdminLogin } from "../../utils/validation-util";
 import * as adminRepo from "../../dal/admin";
 import { signToken } from "../../utils/jwt-util";
+import { SECRET_KEY } from "../../config/constants";
 
 
 
@@ -15,7 +16,7 @@ export async function adminLogin(req: Request, res: Response) {
     if (error) throw new ErrorResponse(400, error);
 
     const matchedUser = await adminRepo.findByUsername(body.username);
-    const token = await signToken({admin_id: matchedUser?.admin_id}, "secret-key");
+    const token = await signToken({admin_id: matchedUser?.admin_id}, SECRET_KEY);
 
     apiResponse.status = 200;
     apiResponse.message = "Login successful";

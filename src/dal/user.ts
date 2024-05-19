@@ -50,14 +50,15 @@ export async function findById(id: string) {
 export async function findAll() {
     try {
         const result = await db
-            .select('tbl_users.user_id', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.username', 'tbl_users.email', "tbl_users.position")
+            .select('tbl_users.user_id', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', "tbl_users.position")
             .sum('tbl_records.amount as total_expense')
             .from('tbl_users')
             .leftJoin('tbl_records', 'tbl_users.user_id', 'tbl_records.user_id')
-            .groupBy('tbl_users.user_id', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.username', 'tbl_users.email', "tbl_users.position");
+            .groupBy('tbl_users.user_id', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', "tbl_users.position");
 
         return result;
     } catch (error) {
+        console.log(error);
         throw new Error((<any>error).code);
     }
 }
@@ -65,13 +66,13 @@ export async function findAll() {
 export async function searchUserByName(query: string) {
     try {
         const result = await db(TBL_NAME)
-            .select('tbl_users.user_id', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.username', 'tbl_users.email', "tbl_users.position")
+            .select('tbl_users.user_id', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', "tbl_users.position")
             .sum('tbl_records.amount as total_expense')
             .from('tbl_users')
             .whereILike("firstname", `%${query}%`)
             .orWhereILike("lastname", `%${query}%`)
             .leftJoin('tbl_records', 'tbl_users.user_id', 'tbl_records.user_id')
-            .groupBy('tbl_users.user_id', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.username', 'tbl_users.email', "tbl_users.position");
+            .groupBy('tbl_users.user_id', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', "tbl_users.position");
 
         return result;
     } catch (error) {
