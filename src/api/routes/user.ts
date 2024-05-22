@@ -26,6 +26,9 @@ router.post("/update-password", asyncHandler(async (req, res) => {
     if (!(await bcrypt.compare(currentPassword, matchedUser.password)))
         throw new ErrorResponse(400, "Current password is incorrect");
 
+    if (newPassword == currentPassword)
+        throw new ErrorResponse(400, "New and current password cannot be the same");
+
     // validate new and password confirmation
     if (newPassword != confirmPassword)
         throw new ErrorResponse(400, "Password doesn't match");
